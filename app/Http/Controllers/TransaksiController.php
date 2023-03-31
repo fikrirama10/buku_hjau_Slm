@@ -147,6 +147,7 @@ class TransaksiController extends Controller
             'nominal' => $request->nominal,
             'keterangan' => $request->keterangan,
             'status' => 'Aktif',
+            'nama_kasir' => $request->nama_kasir,
         ];
         DB::table('transaksi')->where('id', $id)->update([
             'status_transaksi' => 2,

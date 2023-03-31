@@ -16,10 +16,7 @@ class LaporanController extends Controller
     }
     public function laporan_harian($day)
     {
-        $transaksi_selesai = DB::table('transaksi')->where('tgl_keluar', $day)->where('bayar', 1)->get();
-        $transaksi_selesai_total = DB::table('transaksi')->where('tgl_keluar', $day)->where('bayar', 1)->sum('total_transaksi');
-        $transaksi_draf = DB::table('transaksi')->where('tgl_masuk', $day)->where('status_transaksi', '!=', 4)->where('bayar', 0)->get();
-        $transaksi_dp = DB::table('transaksi')->where('tgl_masuk', $day)->where('bayar', 0)->get();
+        
     }
     public function view_laporan($bulan, $tahun)
     {

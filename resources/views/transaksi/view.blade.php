@@ -326,8 +326,8 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-12">
-                                <label for="">Keterangan</label>
-                                <textarea name="keterangan" class='form-control'></textarea>
+                                <label for="">Nama Kasir</label>
+                                <input type="text" name="nama_kasir" class='form-control'>
                             </div>
                         </div>
 
@@ -439,6 +439,13 @@
                             validators: {
                                 notEmpty: {
                                     message: 'Nominal DP harus diisi'
+                                },
+                            }
+                        },
+                        nama_kasir: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Nama Kasir harus diisi'
                                 },
                             }
                         },

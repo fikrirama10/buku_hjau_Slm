@@ -6,6 +6,26 @@ use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class Penilian
 {
+    public static function laporan_harian($day) {
+        $transaksi_selesai = DB::table('transaksi')->where('tgl_keluar',$day)->where('status_transaksi', 3)->get();
+        $transaksi_selesai_total = DB::table('transaksi')->where('tgl_keluar',$day)->where('status_transaksi', 3)->sum('total_transaksi');
+        $transaksi_draf = DB::table('transaksi')->where('tgl_masuk',$day)->where('status_transaksi','!=',4)->get();
+        $transaksi_dp = DB::table('transaksi_dp')->join('transaksi','transaksi_dp.id_transaksi','=','transaksi.id')->select([
+            'transaksi_dp.*',
+            'transaksi.nama_pasien',
+            'transaksi.jenis_rawat',
+            'transaksi.no_rm',
+        ])->where('tgl_dp',$day)->where('status', 'Aktif')->get();
+        $transaksi_dp_total = DB::table('transaksi_dp')->where('tgl_dp',$day)->where('status', 'Aktif')->sum('nominal');
+
+        return [
+            'transaksi_selesai'=>$transaksi_selesai,
+            'transaksi_selesai_total'=>$transaksi_selesai_total,
+            'transaksi_draf'=>$transaksi_draf,
+            'transaksi_dp'=>$transaksi_dp,
+            'transaksi_dp_total'=>$transaksi_dp_total,
+        ];
+    }
     public static function penyebut($nilai) {
 		$nilai = abs($nilai);
 		$huruf = array("", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas");

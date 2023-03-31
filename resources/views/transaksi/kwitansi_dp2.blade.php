@@ -49,4 +49,9 @@
 <div style="width:40%; margin: 28px 0px 10px 10px; float:left;">
     <div style="width:100%; padding: 10px 0px 10px 10px; background:#5656e6; font-weight:bold; color:#fff;">Rp. {{ number_format($dp->nominal,2,',','.') }}</div>
 </div>
-<div style="width:40%; margin: 10px 0px 10px 10px; float:right; text-align:center;">Tanda Tangan</div>
+<div style="width:40%; font-size:14px; margin: 10px 0px 10px 10px; float:right; text-align:center;">Yang Menyerahkan
+<br>
+<br>
+<br>
+{{ $dp->nama_kasir }}
+</div>

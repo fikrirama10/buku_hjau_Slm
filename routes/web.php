@@ -31,12 +31,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/', function () {
         $day = date('Y-m-d');
-        $transaksi_selesai = DB::table('transaksi')->where('tgl_keluar',$day)->where('status_transaksi', 3)->get();
-        $transaksi_selesai_total = DB::table('transaksi')->where('tgl_keluar',$day)->where('status_transaksi', 3)->sum('total_transaksi');
-        $transaksi_draf = DB::table('transaksi')->where('tgl_masuk',$day)->where('status_transaksi','!=',4)->get();
-        $transaksi_dp = DB::table('transaksi_dp')->where('tgl_dp',$day)->where('status', 'Aktif')->get();
-        $transaksi_dp_total = DB::table('transaksi_dp')->where('tgl_dp',$day)->where('status', 'Aktif')->sum('nominal');
-        return view('welcome',compact('transaksi_selesai','transaksi_selesai_total','transaksi_draf','transaksi_dp','transaksi_dp_total'));
+        $transaksi = Penilian::laporan_harian($day);
+        $no = 1;
+        $no2 = 1;
+        return view('welcome',compact('transaksi','no','no2'));
     })->name('home');
     Route::group(['prefix' => 'laporan'], function () {
         Route::get('/', [LaporanController::class, 'index'])->name('laporan');
