@@ -193,6 +193,13 @@ class TransaksiController extends Controller
     public function cetak_faktur_ranap($id){
         
     }
+    public function cetak_kwitasi_akhir($id){
+        $transaksi = DB::table('transaksi')->where('id', $id)->first();
+        $customPaper = array(0, 0, 420,595);
+        $pdf = PDF::loadview('transaksi.kwitansi_akhir', compact('transaksi'))->setPaper($customPaper, 'portrait');
+
+        return $pdf->stream('laporan-pegawai-pdf');
+    }
     public function cetak_kwitasi_dp($id)
     {
         $dp = DB::table('transaksi_dp')->where('id', $id)->first();

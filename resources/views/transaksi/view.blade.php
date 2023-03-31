@@ -207,6 +207,7 @@
                             </a>
                         @else
                             <a target="_blank" href="{{ route('faktur-rajal',$transaksi->id) }}" class="btn btn-label-warning d-grid w-100 mb-2 waves-effect">Print</a>
+                            <a target="_blank" href="{{ route('kwitansi-akhir',$transaksi->id) }}" class="btn btn-info d-grid w-100 mb-2 waves-effect">Print Kwitansi AKhir</a>
                             <a href="{{ route('transaksi') }}" class="btn btn-label-secondary d-grid w-100 waves-effect">Kembali</a>
                             @if (auth()->user()->role_id == 1)
                             <a

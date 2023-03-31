@@ -62,6 +62,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/view-transaksi/{id}', [TransaksiController::class, 'view'])->name('view-transaksi');
         Route::get('/delete-dp/{id}', [TransaksiController::class, 'delete_dp'])->name('delete-dp');
         Route::get('/kwitansi-dp/{id}', [TransaksiController::class, 'cetak_kwitasi_dp'])->name('kwitansi-dp');
+        Route::get('/kwitansi-akhir/{id}', [TransaksiController::class, 'cetak_kwitasi_akhir'])->name('kwitansi-akhir');
         Route::get('/faktur-rajal/{id}', [TransaksiController::class, 'cetak_faktur_rajal'])->name('faktur-rajal');
         Route::get('/preview-rajal/{id}', [TransaksiController::class, 'cetak_faktur_raja_preview'])->name('preview-rajal');
         Route::get('/delete-item-tarif/{id}', [TransaksiController::class, 'delete_item_tarif'])->name('delete-item-tarif');
