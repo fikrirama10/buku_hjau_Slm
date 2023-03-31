@@ -34,7 +34,7 @@ class TarifController extends Controller
             $data = DB::table('tarif')->join('tarif_kategori','tarif.kategori_tarif','=','tarif_kategori.id')->select([
                 'tarif.*',
                 'tarif_kategori.kategori_tarif as tarif_kategori',
-            ]);
+            ])->orderBy('tarif.id','desc');
             return DataTables::query($data)->addColumn('action',function($data){
                 $html = '<a href="'.route('detail-tarif',$data->id).'" class="btn btn-info">Lihat</a>';
                 $html2 = '<a href="'.route('edit-tarif',$data->id).'" class="btn btn-warning">Edit</a>';
@@ -70,8 +70,7 @@ class TarifController extends Controller
             'nama_tarif'=>$request->nama_tarif,
             'nominal_tarif'=>$request->harga_tarif,
             'kategori_tarif'=>$request->kategori_tarif,            
-            'status_tarif'=>'aktif',            
-                       
+            'status_tarif'=>'aktif',
         ];
 
         Tarif::create($data);
