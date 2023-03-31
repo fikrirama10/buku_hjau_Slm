@@ -61,6 +61,7 @@ class LaporanController extends Controller
         //     'data_transaksi'=>$data_transaksi
         // ];
         $pdf = Pdf::loadview('laporan.unit_laporan', [
+            'id_unit'=>$unitt->id,
             'unit'=>$unitt->unit,
             'total' => $total + $total2,
             'data_transaksi'=>$data_transaksi
