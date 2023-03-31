@@ -51,6 +51,7 @@ class TarifController extends Controller
             'nominal_tarif'=>$request->harga_tarif,
             'kategori_tarif'=>$request->kategori_tarif,            
             'status_tarif'=>'aktif',            
+            'sekali'=>$request->sekali,            
         ];
 
         Tarif::create($data);

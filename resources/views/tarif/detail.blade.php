@@ -108,6 +108,14 @@
                             </div>
                            
                             <div class="col-md-12">
+                                <small class="text-light fw-semibold d-block">Sekali</small>
+                                <div class="form-check form-check-inline mt-3">
+                                    <input class="form-check-input" name='sekali' type="checkbox" id="inlineCheckbox1" value="1" />
+                                    <label class="form-check-label" for="inlineCheckbox1">Sekali ?</label>
+                                </div>
+                            </div>
+                           
+                            <div class="col-md-12">
                                 <label for="">Keterangan</label>
                                 <input type="text" class='form-control' name='ketarangan'>
                             </div>
