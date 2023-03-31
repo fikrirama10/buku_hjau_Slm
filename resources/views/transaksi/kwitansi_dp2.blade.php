@@ -22,7 +22,7 @@
     }
 </style>
 <div id="watermark">
-    <img src="{{ asset('storage/BIRUPUTIH.png') }}" height="50%" width="50%" />
+    <img src="{{ asset('assets/image/BIRUPUTIH.png') }}" height="50%" width="50%" />
 </div>
 <center>
     <h3>Kwitansi</h3>

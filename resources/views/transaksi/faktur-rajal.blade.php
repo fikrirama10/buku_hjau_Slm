@@ -103,10 +103,27 @@
             position: absolute;
 
         }
+
+        #watermark {
+            position: fixed;
+            opacity: 0.1;
+            top: 120px;
+            left: 140px;
+
+            /** Change image dimensions**/
+            width: 10cm;
+            height: 10cm;
+
+            /** Your watermark should be behind every content**/
+            z-index: -1000;
+        }
     </style>
 </head>
 
 <body>
+    <div id="watermark">
+        <img src="{{ asset('assets/image/BIRUPUTIH.png') }}" height="50%" width="50%" />
+    </div>
     <h5>RSAU LANUD SULAIMAN</h5>
     <div style='margin-bottom:10px;'>
         <table style='font-size:10px; width:100%;'>
@@ -135,7 +152,7 @@
 
                 <td>Tgl Keluar</td>
                 <td>:</td>
-                <td>{{ date('Y-m-d',strtotime($transaksi->tgl_keluar )) }}</td>
+                <td>{{ date('Y-m-d', strtotime($transaksi->tgl_keluar)) }}</td>
             </tr>
             <tr>
                 <td>Dokter</td>
@@ -175,41 +192,41 @@
             <tr>
                 <td style='border-top:1px solid;  text-transform:uppercase;' colspan=4>
                     Total Tagihan</td>
-                <td align=right
-                    style='border-top:1px solid; text-transform:uppercase; font-size:12px;'
-                    colspan=2>Rp. {{ number_format($transaksi_detail_total, 2, ',', '.') }}</td>
+                <td align=right style='border-top:1px solid; text-transform:uppercase; font-size:12px;' colspan=2>Rp.
+                    {{ number_format($transaksi_detail_total, 2, ',', '.') }}</td>
             </tr>
             <tr>
                 <td style='text-transform:uppercase;' colspan=4>
                     Total DP</td>
-                <td align=right
-                    style=' text-transform:uppercase; font-size:12px;'
-                    colspan=2>Rp. {{ number_format($transaksi_dp, 2, ',', '.') }}</td>
+                <td align=right style=' text-transform:uppercase; font-size:12px;' colspan=2>Rp.
+                    {{ number_format($transaksi_dp, 2, ',', '.') }}</td>
             </tr>
             <tr>
                 <td style=' border-bottom:1px solid; text-transform:uppercase;' colspan=4>
-                   Total Diskon</td>
-                <td align=right
-                    style='border-bottom:1px solid;   text-transform:uppercase; font-size:12px;'
-                    colspan=2>Rp. {{ number_format($transaksi->diskon, 2, ',', '.') }}</td>
+                    Total Diskon</td>
+                <td align=right style='border-bottom:1px solid;   text-transform:uppercase; font-size:12px;' colspan=2>
+                    Rp. {{ number_format($transaksi->diskon, 2, ',', '.') }}</td>
             </tr>
             <tr>
                 <td style='border-top:1px solid;  font-weight:bold;  text-transform:uppercase;' colspan=4>
                     Total Tagihan Pasien</td>
                 <td align=right
                     style='border-top:1px solid;  font-weight:bold;  text-transform:uppercase; font-size:12px;'
-                    colspan=2>Rp. {{ number_format($transaksi_detail_total - $transaksi->diskon - $transaksi_dp, 2, ',', '.') }}</td>
+                    colspan=2>Rp.
+                    {{ number_format($transaksi_detail_total - $transaksi->diskon - $transaksi_dp, 2, ',', '.') }}</td>
             </tr>
             <tr>
                 <td style=' border-bottom:1px solid;  font-weight:bold;  text-transform:uppercase;' colspan=4>
-                   Total Sudah Dibayar Pasien</td>
+                    Total Sudah Dibayar Pasien</td>
                 <td align=right
                     style='border-bottom:1px solid;  font-weight:bold;   text-transform:uppercase; font-size:12px;'
-                    colspan=2>Rp. {{ number_format($transaksi->total_transaksi - $transaksi->diskon - $transaksi_dp, 2, ',', '.') }}</td>
+                    colspan=2>Rp.
+                    {{ number_format($transaksi->total_transaksi - $transaksi->diskon - $transaksi_dp, 2, ',', '.') }}
+                </td>
             </tr>
             <tr>
                 <td style=' border-bottom:1px solid;  font-weight:bold;  text-transform:uppercase;' colspan=4>
-                   Total Yang Harus Dibayar Pasien</td>
+                    Total Yang Harus Dibayar Pasien</td>
                 <td align=right
                     style='border-bottom:1px solid;  font-weight:bold;   text-transform:uppercase; font-size:12px;'
                     colspan=2>Rp. {{ number_format(0, 2, ',', '.') }}</td>
@@ -218,8 +235,8 @@
     </div>
     <footer>
         <div style='text-align:right; margin-bottom:30px;'>Yang Menyerahkan</div>
-       <div style='color:darkgrey; font-size:12px;'>Printed : {{ date('Y-m-d H:i:s') }}</div>
-       <div style='color:darkgrey; font-size:12px;'>Kasir : {{ $transaksi->nama_user }}</div>
+        <div style='color:darkgrey; font-size:12px;'>Printed : {{ date('Y-m-d H:i:s') }}</div>
+        <div style='color:darkgrey; font-size:12px;'>Kasir : {{ $transaksi->nama_user }}</div>
     </footer>
 </body>
 
