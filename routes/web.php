@@ -30,11 +30,19 @@ Route::group(['middleware' => ['guest']], function () {
 Route::group(['middleware' => ['auth']], function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/', function () {
-        return view('welcome');
+        $day = date('Y-m-d');
+        $transaksi_selesai = DB::table('transaksi')->where('tgl_keluar',$day)->where('status_transaksi', 3)->get();
+        $transaksi_selesai_total = DB::table('transaksi')->where('tgl_keluar',$day)->where('status_transaksi', 3)->sum('total_transaksi');
+        $transaksi_draf = DB::table('transaksi')->where('tgl_masuk',$day)->where('status_transaksi','!=',4)->get();
+        $transaksi_dp = DB::table('transaksi_dp')->where('tgl_dp',$day)->where('status', 'Aktif')->get();
+        $transaksi_dp_total = DB::table('transaksi_dp')->where('tgl_dp',$day)->where('status', 'Aktif')->sum('nominal');
+        return view('welcome',compact('transaksi_selesai','transaksi_selesai_total','transaksi_draf','transaksi_dp','transaksi_dp_total'));
     })->name('home');
     Route::group(['prefix' => 'laporan'], function () {
         Route::get('/', [LaporanController::class, 'index'])->name('laporan');
         Route::get('/all-laporan/{awal}/{akhir}', [LaporanController::class, 'all_laporan'])->name('all-laporan');
+        Route::get('/unit-laporan/{awal}/{akhir}/{unit}', [LaporanController::class, 'laporan_unit'])->name('unit-laporan');
+        Route::get('/view-laporan/{bulan}/{tahun}', [LaporanController::class, 'view_laporan'])->name('view-laporan');
     });
     Route::group(['prefix' => 'tarif'], function () {
         Route::get('/', [TarifController::class, 'index'])->name('tarif');

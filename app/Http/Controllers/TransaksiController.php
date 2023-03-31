@@ -197,8 +197,8 @@ class TransaksiController extends Controller
         $dp = DB::table('transaksi_dp')->where('id', $id)->first();
 
         $transaksi = DB::table('transaksi')->where('id', $dp->id_transaksi)->first();
-        $customPaper = array(0, 0, 599.52, 212.60);
-        $pdf = PDF::loadview('transaksi.kwitansi_dp', compact('transaksi', 'dp'))->setPaper($customPaper, 'portrait');
+        $customPaper = array(0, 0, 297.6378,411.0236);
+        $pdf = PDF::loadview('transaksi.kwitansi_dp2', compact('transaksi', 'dp'))->setPaper($customPaper, 'portrait');
 
         return $pdf->stream('laporan-pegawai-pdf');
     }

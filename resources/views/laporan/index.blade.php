@@ -36,19 +36,35 @@
                                     <option value="11">November</option>
                                     <option value="12">Desember</option>
                                 </select>
-                                <button class="btn btn-outline-primary" type="button"
-                                    id="button-addon2">Lihat</button>
-                                
+                                <button class="btn btn-outline-primary" type="button" id="button_ranking">Lihat</button>
+
                             </div>
-                            
+
                         </div>
-                       
-                        
+
+
                     </div>
                 </div>
+                <div class="col-md-12">
+                    <div id="ranking_hasil"></div>
+                </div>
             </div>
+
         </div>
     </div>
-   
-    
 @endsection
+@push('scripts')
+    <script>
+        $('#button_ranking').click(function() {
+            var tahun = $('#tahun').val();
+            var bulan = $('#bulan').val();
+
+            let url = '{{ route('view-laporan', ['bulan' => ':post_id', 'tahun' => ':vote']) }}';
+            url = url.replace(':post_id', bulan);
+            url = url.replace(':vote', tahun);
+            $.get(url).done(function(data) {
+                $('#ranking_hasil').html(data);
+            })
+        })
+    </script>
+@endpush

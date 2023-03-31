@@ -64,7 +64,8 @@
                                                 $total_persen += Penilaian::get_nilai_akhir($nilai_persen, $kl->id);
                                             @endphp
                                             <td>{{ Penilaian::get_total($data->id, $kl->id, $tahun) }}</td>
-                                            <td>{{ round(Penilaian::get_total($data->id, $kl->id, $tahun) / 12, 2) }} %</td>
+                                            <td>{{ round(Penilaian::get_total($data->id, $kl->id, $tahun) / 12, 2) }} %
+                                            </td>
                                         </tr>
                                     @endforeach
                                     <tr class='fw-bold'>
@@ -192,7 +193,7 @@
 @endsection
 @push('scripts')
     <script>
-            $('#button_ranking').click(function() {
+        $('#button_ranking').click(function() {
             var tahun = $('#tahun_ranking').val();
             var id = {{ $data->id }};
 
@@ -203,7 +204,7 @@
                 $('#ranking_hasil').html(data);
             })
         })
-        
+
         $('#presesnsi').click(function() {
             $('#presesnsi').val('');
             $('#poin').val('');

@@ -14,19 +14,70 @@ class LaporanController extends Controller
             'title' => 'Laporan',
         ]);
     }
-    public function laporan_harian(){}
-    public function all_laporan($awal, $akhir)
+    public function laporan_harian($day)
+    {
+        $transaksi_selesai = DB::table('transaksi')->where('tgl_keluar', $day)->where('bayar', 1)->get();
+        $transaksi_selesai_total = DB::table('transaksi')->where('tgl_keluar', $day)->where('bayar', 1)->sum('total_transaksi');
+        $transaksi_draf = DB::table('transaksi')->where('tgl_masuk', $day)->where('status_transaksi', '!=', 4)->where('bayar', 0)->get();
+        $transaksi_dp = DB::table('transaksi')->where('tgl_masuk', $day)->where('bayar', 0)->get();
+    }
+    public function view_laporan($bulan, $tahun)
+    {
+        $unit = DB::table('unit_transaksi')->get();
+        return view('laporan.view', compact('bulan', 'tahun','unit'));
+    }
+    public function laporan_unit($bulan, $tahun, $unit)
+    {
+        $transaksi = DB::table('transaksi_detail')->whereMonth('tgl_transaksi', '=', $bulan)->whereYear('tgl_transaksi', '=', $tahun)->where('bayar', 1)->get();
+        $total = 0;
+        $total2 = 0;
+        foreach ($transaksi as $t) {
+            $tarif_detail = DB::table('tarif_detail')->where('id_tarif', $t->id_tarif)->where('id_unit', $unit)->whereNull('sekali')->get();
+            $tarif_detail_sekali = DB::table('tarif_detail')->where('id_tarif', $t->id_tarif)->where('id_unit', $unit)->where('sekali', 1)->get();
+            $nominal = 0;
+            $nominall = 0;
+            $nominal_sekali = 0;
+            foreach ($tarif_detail as $td) {
+                $nominal += $td->nominal;
+                $nominall = $td->nominal;
+            }
+            foreach ($tarif_detail_sekali as $tds) {
+                $nominal_sekali += $tds->nominal;
+            }
+            if ($nominall == 1) {
+                $total += ($nominal * $t->jumlah) - 15000;
+            } else {
+                $total += $nominal * $t->jumlah;
+            }
+
+            $total2 += $nominal_sekali * 1;
+        }
+        $unitt = DB::table('unit_transaksi')->where('id',$unit)->first();
+        $data_transaksi = DB::table('tarif_detail')->leftJoin('transaksi_detail','tarif_detail.id_tarif','=','transaksi_detail.id_tarif')->join('transaksi','transaksi_detail.id_transaksi','=','transaksi.id')->whereMonth('transaksi_detail.tgl_transaksi', '=', $bulan)->whereYear('transaksi_detail.tgl_transaksi', '=', $tahun)->where('transaksi_detail.bayar', 1)->where('tarif_detail.id_unit',$unit)->orderBy('transaksi.no_rm')->get();
+        //return $data_transaksi;
+        // return [
+        //     'unit'=>$unitt->unit,
+        //     'total' => $total + $total2,
+        //     'data_transaksi'=>$data_transaksi
+        // ];
+        $pdf = Pdf::loadview('laporan.unit_laporan', [
+            'unit'=>$unitt->unit,
+            'total' => $total + $total2,
+            'data_transaksi'=>$data_transaksi
+        ],compact('bulan','tahun'))->setPaper('a4', 'landscape');
+        return $pdf->stream('laporan-keuangan-unit.pdf');
+    }
+    public function all_laporan($bulan, $tahun)
     {
         $unit = DB::table('unit_transaksi')->get();
         $arrunit = array();
         foreach ($unit as $u) {
-            $transaksi = DB::table('transaksi_detail')->whereBetween('tgl_transaksi', [$awal, $akhir])->where('bayar', 1)->get();
+            $transaksi = DB::table('transaksi_detail')->whereMonth('tgl_transaksi', '=', $bulan)->whereYear('tgl_transaksi', '=', $tahun)->where('bayar', 1)->get();
             $total = 0;
             $total2 = 0;
             foreach ($transaksi as $t) {
                 $tarif_detail = DB::table('tarif_detail')->where('id_tarif', $t->id_tarif)->where('id_unit', $u->id)->whereNull('sekali')->get();
                 $tarif_detail_sekali = DB::table('tarif_detail')->where('id_tarif', $t->id_tarif)->where('id_unit', $u->id)->where('sekali', 1)->get();
-                
                 $nominal = 0;
                 $nominall = 0;
                 $nominal_sekali = 0;
@@ -37,12 +88,12 @@ class LaporanController extends Controller
                 foreach ($tarif_detail_sekali as $tds) {
                     $nominal_sekali += $tds->nominal;
                 }
-                if($nominall == 1){
-                    $total +=( $nominal * $t->jumlah) - 15000;
-                }else{
+                if ($nominall == 1) {
+                    $total += ($nominal * $t->jumlah) - 15000;
+                } else {
                     $total += $nominal * $t->jumlah;
                 }
-                
+
                 $total2 += $nominal_sekali * 1;
             }
             array_push($arrunit, [
