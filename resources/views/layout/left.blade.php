@@ -25,13 +25,14 @@
                 <div data-i18n="Transaksi">Transaksi</div>
             </a>
         </li>
+        
+        @if (auth()->user()->role_id == 1)
         <li class="menu-item ">
             <a href="{{ route('tarif') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-receipt"></i>
                 <div data-i18n="Tarif">Tarif</div>
             </a>
         </li>
-        @if (auth()->user()->role_id == 1)
         <li class="menu-item ">
             <a href="{{ route('laporan') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-receipt"></i>
