@@ -1,6 +1,6 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo py-3 px-4 ms-2">
-        <a href="index.html" class="d-block w-100">
+        <a href="{{ route('home') }}" class="d-block w-100">
             <img src="{{ asset('storage/BIRUPUTIH.png') }}" alt="" class="app-brand-img w-px-100">
             <img src="{{ asset('storage/BIRUPUTIH.png') }}" alt="" class="app-brand-img-collapsed w-px-30">
         </a>
@@ -14,7 +14,7 @@
     <ul class="menu-inner py-1">
         <!-- Page -->
         <li class="menu-item {{ request()->routeIs('home') ? 'active' : '' }}">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('home') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-smart-home"></i>
                 <div data-i18n="Dashboard">Dashboard</div>
             </a>
