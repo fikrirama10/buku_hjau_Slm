@@ -6,6 +6,7 @@ use App\Models\Tarif;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Expr\FuncCall;
+use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
 class TarifController extends Controller
@@ -36,7 +37,8 @@ class TarifController extends Controller
             ]);
             return DataTables::query($data)->addColumn('action',function($data){
                 $html = '<a href="'.route('detail-tarif',$data->id).'" class="btn btn-info">Lihat</a>';
-                return $html;
+                $html2 = '<a href="'.route('edit-tarif',$data->id).'" class="btn btn-warning">Edit</a>';
+                return $html.$html2;
             })->make(true);
         }
         $kategori = DB::table('tarif_kategori')->get();
@@ -45,13 +47,31 @@ class TarifController extends Controller
             'id'=>'Data Tarif',
         ],compact('kategori'));
     }
+    public function post_edit(Request $request,$id){
+        Tarif::where('id',$id)->update([
+            'nama_tarif'=>$request->nama_tarif,
+            'nominal_tarif'=>$request->harga_tarif,
+            'kategori_tarif'=>$request->kategori_tarif,            
+            'status_tarif'=>$request->status_tarif,            
+        ]);
+        Alert::success('Data berhasil di ubah');
+        return redirect(route('tarif'));
+    }
+    public function edit($id){
+        $tarif = Tarif::where('id',$id)->first();
+        $kategori = DB::table('tarif_kategori')->get();
+        return view('tarif.edit',[
+            'title'=>'Tarif',
+            'id'=>'tarif',
+        ],compact('tarif','kategori'));
+    }
     public function post_tarif(Request $request){
         $data = [
             'nama_tarif'=>$request->nama_tarif,
             'nominal_tarif'=>$request->harga_tarif,
             'kategori_tarif'=>$request->kategori_tarif,            
             'status_tarif'=>'aktif',            
-            'sekali'=>$request->sekali,            
+                       
         ];
 
         Tarif::create($data);
@@ -83,6 +103,7 @@ class TarifController extends Controller
             'id_tarif'=>$id,
             'nominal'=>$request->nominal,
             'keterangan'=>$request->keterangan,
+            'sekali'=>$request->sekali, 
         ];
         DB::table('tarif_detail')->insert($data);
         return back();

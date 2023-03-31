@@ -47,10 +47,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'tarif'], function () {
         Route::get('/', [TarifController::class, 'index'])->name('tarif');
         Route::get('/detail/{id}', [TarifController::class, 'detail_tarif'])->name('detail-tarif');
+        Route::get('/edit-tarif/{id}', [TarifController::class, 'edit'])->name('edit-tarif');
         Route::get('/delete-detail/{id}', [TarifController::class, 'delete_detail'])->name('delete-detail-tarif');
         Route::get('/get-tarif', [TarifController::class, 'get_tarif'])->name('get-tarif');
         Route::get('/get-tarif-id/{id}', [TarifController::class, 'get_tarif_id'])->name('get-tarif-id');
         Route::post('/post-tarif', [TarifController::class, 'post_tarif'])->name('post-tarif');
+        Route::post('/post-edit-tarif/{id}', [TarifController::class, 'post_edit'])->name('post-edit-tarif');
         Route::post('/post-detai-tarif/{id}', [TarifController::class, 'post_detail_tarif'])->name('post-detail-tarif');
     });
     Route::group(['prefix' => 'transaksi'], function () {
