@@ -32,7 +32,7 @@
     <tr>
         <td>Telah Terima Dari</td>
         <td>:</td>
-        <td><b>{{ $transaksi->nama_penanggung }}</b></td>
+        <td><b>{{ $transaksi->nama_pasien }}</b></td>
     </tr>
     <tr>
         <td>Uang Sejumlah</td>

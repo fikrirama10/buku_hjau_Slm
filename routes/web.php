@@ -38,9 +38,11 @@ Route::group(['middleware' => ['auth']], function () {
     })->name('home');
     Route::group(['prefix' => 'laporan'], function () {
         Route::get('/', [LaporanController::class, 'index'])->name('laporan');
+        Route::get('/laporan-dokter-ugd/{awal}/{akhir}/{iddokter}', [LaporanController::class, 'laporan_perdokter'])->name('laporan-dokter-ugd');  
         Route::get('/all-laporan/{awal}/{akhir}', [LaporanController::class, 'all_laporan'])->name('all-laporan');
         Route::get('/unit-laporan/{awal}/{akhir}/{unit}', [LaporanController::class, 'laporan_unit'])->name('unit-laporan');
-        Route::get('/view-laporan/{bulan}/{tahun}', [LaporanController::class, 'view_laporan'])->name('view-laporan');
+        Route::get('/unit-laporan-dua/{awal}/{akhir}/{unit}', [LaporanController::class, 'laporan_unit_2'])->name('unit-laporan-dua');
+        Route::get('/view-laporan/{bulan}/{tahun}', [LaporanController::class, 'view_laporan'])->name('view-laporan'); 
     });
     Route::group(['prefix' => 'tarif'], function () {
         Route::get('/', [TarifController::class, 'index'])->name('tarif');

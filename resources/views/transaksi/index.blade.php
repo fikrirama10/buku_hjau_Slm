@@ -7,7 +7,7 @@
 
             <a href='{{ route('tambah.transaksi') }}' class='btn btn-success text-white'><i
                     class="menu-icon tf-icons ti ti-playlist-add"></i> Tambah Data</a>
-            <a href='{{ route('tambah.transaksi') }}' class='btn btn-warning text-white'><i
+            <a href='{{ route('tambah.transaksi_manual') }}' class='btn btn-warning text-white'><i
                     class="menu-icon tf-icons ti ti-playlist-add"></i> Tambah Manual</a>
         </div>
         <div class="card-body">

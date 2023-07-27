@@ -197,7 +197,10 @@
                                 <span class="d-flex align-items-center justify-content-center text-nowrap"><i
                                         class="ti ti-send ti-xs me-1"></i>Bayar</span>
                             </button>
+                            @if (auth()->user()->role_id == 1)
                             <a href="{{ route('preview-rajal',$transaksi->id) }}" target="_blank" class="btn btn-label-secondary d-grid w-100 mb-2 waves-effect">Preview</a>
+                            @endif
+                            
                             <a href="{{ route('transaksi') }}"
                                 class="btn btn-label-secondary d-grid w-100 waves-effect">Simpan</a>
                             <a

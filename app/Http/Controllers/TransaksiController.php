@@ -91,7 +91,7 @@ class TransaksiController extends Controller
                 'nama_dokter' => $dokter->nama_dokter,
                 'poli_ruangan' => $request->poli_ruangan,
                 'id_user' => 1,
-                'tgl_transaksi' => date('Y-m-d H:i:s'),
+                'tgl_transaksi' => date('Y-m-d H:i:s',strtotime('+7 hours')),
                 'tgl_masuk' => $request->tgl_masuk,
                 'status_transaksi' => 1,
                 'input_simrs' => $request->input_simrs,
